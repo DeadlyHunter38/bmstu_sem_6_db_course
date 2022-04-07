@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2022.2.16)  22 MAR 2022 14:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Debian) (preloaded format=pdflatex 2022.2.16)  7 APR 2022 12:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1225,14 +1225,14 @@ File: l3backend-pdftex.def 2020-01-29 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count345
 \l__pdf_internal_box=\box119
 )
-(./rpz.aux (./01_contents.aux)
+(./rpz.aux (./definitions.aux)
 LaTeX Font Info:    Trying to load font information for T2A+cmr on input line 2
 4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmr.fd
 File: t2acmr.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
 )<<t2a.cmap>>
-(./03_analysis.aux) (./08_biblio.aux))
+(./01_contents.aux) (./03_analysis.aux) (./08_biblio.aux))
 \openout1 = `rpz.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -1357,13 +1357,9 @@ LaTeX Info: Redefining \nameref on input line 5.
 \openout5 = `rpz.out'.
 
 \c@lstlisting=\count353
-\openout2 = `01_contents.aux'.
+\openout2 = `definitions.aux'.
 
- (./01_contents.tex (./rpz.toc)
-\tf@toc=\write6
-\openout6 = `rpz.toc'.
-
-) [3
+ (./definitions.tex) [3
 
 
 
@@ -1371,11 +1367,23 @@ LaTeX Info: Redefining \nameref on input line 5.
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+\openout2 = `01_contents.aux'.
+
+ (./01_contents.tex (./rpz.toc)
+\tf@toc=\write6
+\openout6 = `rpz.toc'.
+
+) [4
+
+
+
+
+]
 \openout2 = `03_analysis.aux'.
 
  (./03_analysis.tex
 {\cyrillictext \CYRG \cyrl \cyra \cyrv \cyra } 1.
-<./images/02_A0.png, id=79, 1292.83pt x 717.68124pt>
+<./images/02_A0.png, id=84, 1292.83pt x 717.68124pt>
 File: ./images/02_A0.png Graphic file (type png)
 <use ./images/02_A0.png>
 Package pdftex.def Info: ./images/02_A0.png  used on input line 31.
@@ -1385,7 +1393,7 @@ Overfull \hbox (36.0364pt too wide) in paragraph at lines 31--32
  [][] 
  []
 
-[4
+[5
 
 
 
@@ -1396,8 +1404,8 @@ Overfull \hbox (20.72884pt too wide) in paragraph at lines 37--38
 -нии SQL-запроса
  []
 
-[5 <./images/02_A0.png>] [6]
-<./images/postgre_plan.pdf, id=113, 558.16531pt x 306.18388pt>
+[6 <./images/02_A0.png>] [7]
+<./images/postgre_plan.pdf, id=118, 558.16531pt x 306.18388pt>
 File: ./images/postgre_plan.pdf Graphic file (type pdf)
 <use ./images/postgre_plan.pdf>
 Package pdftex.def Info: ./images/postgre_plan.pdf  used on input line 68.
@@ -1408,17 +1416,17 @@ Overfull \hbox (7.24213pt too wide) in paragraph at lines 77--78
 -ли-ро-ва-ния бизнес-
  []
 
-<./images/adventure_works_db_diagram.pdf, id=115, 2689.79906pt x 1666.72687pt>
+<./images/adventure_works_db_diagram.pdf, id=120, 2689.79906pt x 1666.72687pt>
 File: ./images/adventure_works_db_diagram.pdf Graphic file (type pdf)
 <use ./images/adventure_works_db_diagram.pdf>
 Package pdftex.def Info: ./images/adventure_works_db_diagram.pdf  used on input
  line 83.
 (pdftex.def)             Requested size: 726.25546pt x 450.02228pt.
-[7 <./images/postgre_plan.pdf>]) [8]
+[8 <./images/postgre_plan.pdf>]) [9]
 Overfull \vbox (22.01962pt too high) has occurred while \output is active []
 
 
-[9 <./images/adventure_works_db_diagram.pdf>]
+[10 <./images/adventure_works_db_diagram.pdf>]
 \openout2 = `08_biblio.aux'.
 
  (./08_biblio.tex
@@ -1439,7 +1447,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--21
  / en-[]us / previous-[]versions /
  []
 
-) [10
+) [11
 
 
 
@@ -1449,15 +1457,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 20--21
 Package caption Warning: Unused \captionsetup[lstlisting] on input line 42.
 See the caption package documentation for explanation.
 
-(./rpz.aux (./01_contents.aux) (./03_analysis.aux) (./08_biblio.aux))
+(./rpz.aux (./definitions.aux) (./01_contents.aux) (./03_analysis.aux)
+(./08_biblio.aux))
 Package rerunfilecheck Info: File `rpz.out' has not changed.
-(rerunfilecheck)             Checksum: 5C0DA42FDF693930A797E18608F46154;1132.
+(rerunfilecheck)             Checksum: 1FEA253A6AFCD4538B0C994A001ADFAE;1132.
  ) 
 Here is how much of TeX's memory you used:
- 38005 strings out of 479304
- 844831 string characters out of 5869779
- 1435166 words of memory out of 5000000
- 54485 multiletter control sequences out of 15000+600000
+ 38017 strings out of 479304
+ 844999 string characters out of 5869779
+ 1435165 words of memory out of 5000000
+ 54488 multiletter control sequences out of 15000+600000
  410320 words of font info for 40 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  94i,10n,94p,769b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1468,10 +1477,10 @@ fb></usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb></usr/share/texmf
 /fonts/type1/public/cm-super/sfrm3583.pfb></usr/share/texmf/fonts/type1/public/
 cm-super/sfti1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1440.pf
 b>
-Output written on rpz.pdf (8 pages, 242597 bytes).
+Output written on rpz.pdf (9 pages, 239348 bytes).
 PDF statistics:
- 196 PDF objects out of 1000 (max. 8388607)
- 151 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
+ 201 PDF objects out of 1000 (max. 8388607)
+ 155 compressed objects within 2 object streams
+ 36 named destinations out of 1000 (max. 500000)
  192 words of extra memory for PDF output out of 10000 (max. 10000000)
 
