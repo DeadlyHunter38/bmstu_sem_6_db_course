@@ -7,21 +7,22 @@
 	\captionsetup{singlelinecheck = false, justification=raggedleft}
 	\caption{Сравнение основных характеристик СУБД}
 	\label{table:dbms}
-	\begin{tabular}{|c|c|c|c|c|c|c|}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
 		\hline	
-		\multirow{2}{*}{CУБД}  & \multirow{2}{*}{Лицензия} & \multirow{2}{*}{ACID}   &\multirow{2}{*}{RDBMS}  & \multirow{2}{*}{Cloud-} & \multirow{2}{*}{OLTP} & \multirow{2}{*}{In-memory} \\
-					&		   &	    &	  & only &  &  \\
+		\multirow{2}{*}{CУБД}  & \multirow{2}{*}{Open} & \multirow{2}{*}{ACID}   &\multirow{2}{*}{RDBMS}  & \multirow{2}{*}{Cloud-} & \multirow{2}{*}{OLTP} & \multirow{2}{*}{In-} &  \multirow{2}{*}{SQL}\\
+					&  source  &	    &	  & only &  & memory &  \\
 		\hline
-		PostgreSQL  & -  	   & +  	& +   & -  & +  & + \\ \hline
-		Oracle  	& +	       & +  	& +   & -  & +  & + \\ \hline
-		MySQL	    & -	       & +		& +	  &	-  & +  & + \\ \hline
-		MariaDB		& -	       & +		& +	  & -  & +	& + \\ \hline
-		MongoDB		& -  	   & +		& -	  & -  & +	& + \\ \hline
-		SQLite		& -		   & +		& +	  &	-  & +	& + \\ \hline
-		Cassandra	& -		   & -		& -	  &	-  & +	& +  \\ \hline
-		\hline
+		PostgreSQL  & +  	   & +  	& +   & -  & +  & - & + \\ \hline
+		Oracle  	& -	       & +  	& +   & -  & +  & - & + \\ \hline
+		MySQL	    & +	       & +		& +	  &	-  & +  & - & + \\ \hline
+		MariaDB		& +	       & +		& +	  & -  & +	& - & +  \\ \hline
+		MongoDB		& +  	   & +		& -	  & -  & +	& - & - \\ \hline
+		SQLite		& +		   & +		& +	  &	-  & +	& - & + \\ \hline
+		Cassandra	& +		   & -		& -	  &	-  & +	& - & - \\ \hline
+		Redis    	& +		   & -		& -	  &	-  & +	& + & - \\ \hline
 	\end{tabular}
 \end{table}
+PostgreSQL является стабильной СУБД, имеет хорошо структурированные данные, поэтому именно она и выбирается в качестве основной.
 
 \section{Этапы обработки SQL-запроса}
 Подход к выполнению запроса СУБД на примере PostgreSQL представлен на рисунке \ref{image:query_plan}.
@@ -74,6 +75,10 @@
 Для получения оптимального дерева плана запроса, планировщик должен рассмотреть комбинации всех индексов и возможности методов объединения. При увеличении числа используемых таблиц может наступить <<комбинаторный взрыв>>. Таким образом, при количестве таблиц, большем 12, используются \textit{генетические алгоритмы}.
 
 \section{Выбор БД}
+\subsection{Northwind}
+База данных Northwind содержит данные о продажах фиктивной компании под названием “Northwind Traders”, которая импортирует и экспортирует специальные продукты питания со всего мира.
+
+\subsection{AdventureWorks}
 В качестве базы данных была выбрана <<Adventure Works Cycles>> -- фиктивная компания, разработанная Microsoft для моделирования бизнес-процесса \cite{adventureworks}. Данная фирма <<является>> крупной и многонациональной, которая производит и продает металлические и композитные велосипеды на коммерческих рынках Северной Америки, Европы, Азии.
 
 По своей структуре база данных <<AdventureWorks>> является сложной: состоит из множества схем отношений, соединенных друг с другом различными связями. Диаграмма базы данных этой компании приведена в приложении А.
