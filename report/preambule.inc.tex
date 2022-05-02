@@ -38,32 +38,83 @@
 
 \usepackage{xcolor}
 \definecolor{darkgray}{gray}{0.15}
-\usepackage{listings} %вставка кода
+
+%rotate figure and lanel
+\usepackage{rotating}
+\usepackage{epsfig}
+\usepackage{subfig}
+
+%код
+\usepackage{listings} 
 \captionsetup[lstlisting]{singlelinecheck = false, justification=raggedright}
-\lstset{ % add your own preferences
-	frame=single,
+\lstset{
 	basicstyle=\footnotesize\ttfamily,
-	identifierstyle=\color{darkgray},
-	keywordstyle=\color{black},
+	language=[Sharp]C, % Или другой ваш язык -- см. документацию пакета
+	commentstyle=\color{comment},
 	numbers=left,
-	numbersep=10pt,
-	stepnumber=1,
-	numberstyle=\tiny,
-	showstringspaces=false,
-	breaklines=true, 
-	captionpos=t,
+	numberstyle=\tiny\color{plain},
+	numbersep=5pt,
 	tabsize=4,
-	language=C,
-	inputencoding=utf8
+	extendedchars=\true,
+	breaklines=true,
+	keywordstyle=\color{blue},
+	frame=b,
+	stringstyle=\ttfamily\color{string}\ttfamily,
+	showspaces=false,
+	showtabs=false,
+	xleftmargin=17pt,
+	framexleftmargin=17pt,
+	framexrightmargin=5pt,
+	framexbottommargin=4pt,
+	showstringspaces=false,
+	inputencoding=utf8x,
+	keepspaces=true
+}
+
+\DeclareCaptionLabelSeparator{line}{\ --\ }
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox[cmyk]{0.43,0.35,0.35,0.01}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{
+	format=listing,
+	labelfont=white,
+	textfont=white,
+	singlelinecheck=false,
+	margin=0pt,
+	font={bf,footnotesize},
+	labelsep=line
 }
 
 \frenchspacing
 
 \usepackage{titlesec}
-\titleformat{\section}
-{\normalsize\bfseries}
-{\thesection}
-{1em}{}
+%section
+\titleformat{\section}[block]
+{\bfseries\normalsize\filcenter}{\thesection}{1em}{}
+
+%subsection
+\titleformat{\subsection}[hang]
+{\bfseries\normalsize}{\thesubsection}{1em}{}
+\titlespacing\subsection{\parindent}{\parskip}{\parskip}
+
+%subsubsection
+\titleformat{\subsubsection}[hang]
+{\bfseries\normalsize}{\thesubsubsection}{1em}{}
+\titlespacing\subsubsection{\parindent}{\parskip}{\parskip}
+
+% Подсчет изображений, таблиц
+\usepackage[figure,table]{totalcount} 
+
+% Поворот изображения вместе с названием
+\usepackage{rotating}
+
+% Работа с изображениями и таблицами; переопределение названий по ГОСТу
+\usepackage{caption}
+\captionsetup[figure]{name={Рисунок},labelsep=endash}
+\captionsetup[table]{singlelinecheck=false, labelsep=endash}
+
+% Для подсчета числа страниц
+\usepackage{lastpage}
+
 \titlespacing*{\chapter}{0pt}{-30pt}{8pt}
 \titlespacing*{\section}{\parindent}{*4}{*4}
 \titlespacing*{\subsection}{\parindent}{*4}{*4}
@@ -79,7 +130,6 @@
 \linespread{1.25} %межстрочный интервал
 \newcommand{\anonsection}[1]{ \section*{#1} \addcontentsline{toc}{section}{\numberline {}#1}}
 
-% какой то сложный кусок со стак эксчейндж для квадратных скобок
 \makeatletter
 \newenvironment{sqcases}{%
 	\matrix@check\sqcases\env@sqcases
