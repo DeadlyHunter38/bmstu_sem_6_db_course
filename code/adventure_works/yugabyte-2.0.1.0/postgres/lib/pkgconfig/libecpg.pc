@@ -1,0 +1,9 @@
+Name: libecpg
+Description: PostgreSQL libecpg library
+Url: http://www.postgresql.org/
+Version: 11.2
+Requires: 
+Requires.private: libpq libpgtypes
+Cflags: -I/Users/hector/code/yugabyte-db/build/release-clang-dynamic-ninja/postgres/include
+Libs: -L/Users/hector/code/yugabyte-db/build/release-clang-dynamic-ninja/postgres/lib -lecpg
+Libs.private: -L/usr/local/opt/icu4c/lib -lm

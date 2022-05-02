@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:14.2
+    restart: unless-stopped
+    ports:
+      - '5432:5432'
+    volumes:
+      - db_project:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./chinook:/chinook
+      - ./northwind:/northwind
+      - ./adventure_works:/adventure_works
+volumes:
+  db_project:
+

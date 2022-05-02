@@ -1,0 +1,9 @@
+Name: libpq
+Description: PostgreSQL libpq library
+Url: http://www.postgresql.org/
+Version: 11.2
+Requires: 
+Requires.private: 
+Cflags: -I/Users/hector/code/yugabyte-db/build/release-clang-dynamic-ninja/postgres/include
+Libs: -L/Users/hector/code/yugabyte-db/build/release-clang-dynamic-ninja/postgres/lib -lpq
+Libs.private: -L/usr/local/opt/icu4c/lib 
