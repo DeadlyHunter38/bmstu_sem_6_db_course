@@ -1,0 +1,23 @@
+\appendixnew*{ПРИЛОЖЕНИЕ Б. \\ Развертывание приложения.} \label{appendix:b}
+\addcontentsline{toc}{chapter}{ПРИЛОЖЕНИЕ Б. Развертывание приложения}
+
+\setcounter{figure}{1}
+\makeatletter 
+\renewcommand{\thelstlisting}{Б.\@arabic\c@figure}
+\makeatother
+
+
+
+\begin{lstlisting}[label=lst:docker_deploy, numbers=none, basicstyle=\normalsize, caption=Сценарий запуска контейнеров с базами данных]
+docker-compose up -d;
+# просмотр команд запуска
+docker ps;
+
+# подключение к контейнеру postgres
+docker exec -it postgres bash;
+su postgres;
+psql;
+
+# подключение к контейнеру swipl (команда запуска)
+swipl;
+\end{lstlisting}

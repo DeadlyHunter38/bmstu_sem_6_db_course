@@ -1,0 +1,198 @@
+\chapter{Технологический раздел}
+
+\section{Запросы реляционной алгебры и их эквивалентное описание в логике предикатов}
+\vspace{-0.5cm}
+На листинге \ref{lst:compare} приводятся примеры описания простых операций выборки, сравнения, используя реляционную алгебру и логику предикатов \cite{rl_similiraty}.
+
+\begin{lstlisting}[label=lst:compare, caption=Сопоставление операций, basicstyle=\small, mathescape, numbers = none]
+	Реляционная алгебра $\hspace{4cm}$	Логика$\ $предикатов
+	1. Проекция
+	S = $\displaystyle\pi_{parent\_name}(Parent)$  $\hspace{3.5cm}$ S(Y) $\leftarrow$ parent(X, Y)
+	
+	2. Выборка
+	millionare = $\sigma_{amount}(Income)$ $\hspace{1.5cm}$ millionare $\leftarrow$ income(X, Y)
+	
+	3. Фильтр по признаку
+	millionare = $\sigma_{amount>10000}(Income)$ $\hspace{0.5cm}$ millionare $\leftarrow$ income(X, Y), 
+									   				Y > 10000
+									   				
+	4. Объединение
+	$R_1(A_1, A_2) \cap R_2(A_1, A_2)$	$\hspace{4.5cm}$ $P(d_1, d_2) \land P(d_3, d_4)$
+	
+	5. Пересечение
+	$R_1(A_1, A_2) \cup R_2(A_1, A_2)$	$\hspace{4.5cm}$ $P(d_1, d_2) \lor P(d_3, d_4)$
+\end{lstlisting}
+
+\section{Сравнение СУБД}
+\vspace{-0.5cm}
+Ограничения к доступу коммерческими компаниями своих продуктов на фоне различных конфликтов приводят к решению импортозамещения программных решений. Возникает необходимость использования открытых ПО. Сравнение основных характеристик СУБД приводится в таблице \ref{table:dbms} \cite{comparative_db}.
+
+\begin{table}[ht!]
+	\centering
+	\captionsetup{singlelinecheck = false, justification=raggedright}
+	\caption{Сравнение основных характеристик СУБД}
+	\label{table:dbms}
+	\begin{tabular}{|c|c|c|c|c|c|c|c|}
+		\hline	
+		\multirow{2}{*}{CУБД}  & \multirow{2}{*}{Open} & \multirow{2}{*}{ACID}   &\multirow{2}{*}{RDBMS}  & \multirow{2}{*}{Cloud-} & \multirow{2}{*}{OLTP} & \multirow{2}{*}{In-} &  \multirow{2}{*}{SQL}\\
+					&  source  &	    &	  & only &  & memory &  \\
+		\hline
+		PostgreSQL  & +  	   & +  	& +   & -  & +  & - & + \\ \hline
+		Oracle  	& -	       & +  	& +   & -  & +  & - & + \\ \hline
+		MySQL	    & +	       & +		& +	  &	-  & +  & - & + \\ \hline
+		MariaDB		& +	       & +		& +	  & -  & +	& - & +  \\ \hline
+		MongoDB		& +  	   & +		& -	  & -  & +	& - & - \\ \hline
+		SQLite		& +		   & +		& +	  &	-  & +	& - & + \\ \hline
+		Cassandra	& +		   & -		& -	  &	-  & +	& - & - \\ \hline
+		Redis    	& +		   & -		& -	  &	-  & +	& + & - \\ \hline
+	\end{tabular}
+\end{table}
+PostgreSQL \cite{postgresql} является стабильной СУБД \cite{postgres_stability}, имеет хорошее структурирование, поэтому в качестве основной выбрана она.
+
+\section{Сравнение учебных БД}
+\vspace{-0.5cm}
+\textit{<<Adventure Works Cycles>>} -- фиктивная компания, разработанная Microsoft для моделирования бизнес-процесса \cite{adventureworks}. Данная фирма <<является>> крупной и многонациональной, которая производит и продает металлические и композитные велосипеды на коммерческих рынках Северной Америки, Европы, Азии. По своей структуре база данных <<AdventureWorks>> является сложной: состоит из множества схем отношений, соединенных друг с другом различными связями. Диаграмма базы данных этой компании приведена в приложении А на рисунке \ref{image:db_diagram_adventureworks}.
+
+База данных \textit{<<Northwind>>} содержит данные о продажах фиктивной компании под названием <<Northwind Traders>>, которая импортирует и экспортирует специальные продукты питания со всего мира \cite{northwind}. Диаграмма БД этой компании приведена в приложении А на рисунке \ref{image:db_diagram_northwind}.
+
+Модель данных \textit{<<Chinook>>} представляет собой хранилище цифровых медиа, включая таблицы для исполнителей, альбомов, аудиодорожек, счетов-фактур и клиентов \cite{chinook}. Диаграмма БД этой компании приведена в приложении А на рисунке \ref{image:db_diagram_chinook}.
+
+В тестируемой базе данных в нескольких таблицах должно присутствовать число записей, превышающее $10^6$ штук. Такому требованию удовлетворяет <<AdventureWorks>>, поэтому в качестве учебной была выбрана именно она.
+
+\section{Выбор реализаций Prolog, способных к распараллеливанию}
+\vspace{-0.5cm}
+Существует множество версий параллельного Prolog. Необходима такая реализация, которая способна отвечать следующим критериям:
+\begin{itemize}
+    \item[$\circ$] ПО должно быть открытым (критерий 1);
+    \item[$\circ$] время загрузки программы не должно превышать 10 минут (критерий 2);
+    \item[$\circ$] программа не должна занимать оперативной памяти больше 5Гб (критерий 3);
+    \item[$\circ$] программа должна возвращать результат с числом столбцов, большем чем 1 (критерий 4);
+    \item[$\circ$] должно быть загружено число записей, превышающее $10^6$ (критерий 5).
+\end{itemize}
+
+В таблице \ref{table:compare_prolog_versions} представлены реализации Prolog и их удовлетворение критериям.
+\begin{table}[ht!]
+	\centering
+	\captionsetup{singlelinecheck = false, justification=raggedright}
+	\caption{Сравнение основных реализаций Prolog}
+	\label{table:compare_prolog_versions}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline	
+		Реализация & Крит. 1 & Крит. 2 & Крит. 3 & Крит. 4 & Крит. 5 \\ \hline
+		Datalog  & + & - & +  & + & +\\ \hline
+		Eclipse  & + & + & - & + & - \\ \hline
+		Visual Prolog & - & ? & ? & ? & ? \\ \hline
+		CIAO & + & - & + & + & +  \\ \hline
+		SWI-Prolog	& + & + & + & + & + \\ \hline
+		Parlog	& + & + & + & - & - \\ \hline
+		SICStus	& - & ? & ? & ? & ? \\ \hline
+	\end{tabular}
+\end{table}
+
+Знак <<?>> означает, что в свободном доступе проверить удовлетворение критерию невозможно.
+
+На основе вышеперечисленных требований была выбрана реализация SWI-Prolog \cite{swi_prolog}, которая удовлетворяет всем критериям.
+
+\section{Выбор средств реализации}
+\vspace{-0.5cm}
+Для запуска приложения используется принцип контейнеризации на примере Docker \cite{docker}. Он позволяет упаковывать все имеющиеся зависимости, их версии и осуществлять запуск в изолированной среде. Таким образом, можно работать с несколькими контейнерами на одном хосте, легко ими делиться для других пользователей на разных компьютерах. Инструкция по развертыванию ПО приведена в приложении Б на листинге \ref{lst:docker_deploy}.
+
+\section{Детали реализации}
+\vspace{-0.5cm}
+На листинге \ref{lst:exper_query_1_sql} приведен выполняемый простой SQL-запрос (содержит операторы SELECT, FROM, WHERE).  Версия, написанная через конъюнкцию предикатов, представлен на листинге \ref{lst:exper_query_1_prolog}.
+
+\begin{lstlisting}[label=lst:exper_query_1_sql, caption=Простой SQL-запрос, basicstyle=\small, numbers = none]
+select *
+from comp_one
+where surname = 'Гусева' and age > 40;
+\end{lstlisting}
+\begin{lstlisting}[label=lst:exper_query_1_prolog, caption=Простой запрос в версии SWI-Prolog, basicstyle=\small, numbers = none]
+bigger_age(Id, Surname, Age, Place, MS, MA) :- 
+	comp_one(Id, Surname, Age, Place),
+	Surname = MS, Age > MA.
+	
+findall((Id, Surname, Age, Place), bigger_age(Id, Surname, Age, Place, 'Гусева', 40), Ids).
+\end{lstlisting}
+
+На листинге \ref{lst:exper_query_2_sql} содержится запрос, имеющий операторы SELECT, FROM, WHERE, а также обращение к другой таблице при помощи JOIN по внешнему ключу, записанный на PostgreSQL. Запрос через конъюнкцию предикатов представлен на листинге \ref{lst:exper_query_2_prolog}.
+
+\begin{lstlisting}[label=lst:exper_query_2_sql, caption=Запрос c оператором JOIN (PostgreSQL), basicstyle=\small, numbers = none]
+select c.id, c.age, a.name, a.kind
+from comp_one as c join animals as a on c.id = a.id_host 
+where surname = 'Гусева' and c.age > 40;
+\end{lstlisting}
+\newpage
+
+\begin{lstlisting}[label=lst:exper_query_2_prolog, caption=Запрос c оператором JOIN (SWI-Prolog), basicstyle=\small, numbers = none]
+find_an(SW, AgeW, Id, Age, Name, Kind) :-
+	comp_one(Id, Surname, Age, _, _, _, _, _), Surname = SW,
+	Age > AgeW, 
+	animals(_, Idh, Name, Kind, _, _, _, _), Id = Idh).
+	
+findall((Id, Age, Name, Kind), 
+        find_an('Гусева', 40, Id, Age, Name, Kind), IdS).
+\end{lstlisting}
+
+На листинге \ref{lst:exper_query_3_sql} представлено использование потоков для версии \newline PostgreSQL.
+\begin{lstlisting}[label=lst:exper_query_3_sql, caption=Запрос c оператором SELECT с использованием 5 потоков (PostgreSQL), basicstyle=\small, numbers = none]
+set max_parallel_workers_per_gather=16;
+
+explain analyze select *
+from comp_one
+where surname = 'Гусева' and age > 40;
+\end{lstlisting}
+
+Запрос, написанный в версии Prolog с примером в виде пяти потоков, представлен на листингах \ref{lst:exper_query_31_prolog} и \ref{lst:exper_query_32_prolog}.
+\begin{lstlisting}[label=lst:exper_query_31_prolog, caption=Запрос c оператором SELECT с использованием 5 потоков (Prolog). Часть 1., basicstyle=\small, numbers = none, language=Prolog]
+bigger_age(Id, Surname, Age, Cabinet, Post, WorkD, MS, MA):-
+        comp_one(Id, Surname, Age, Cabinet, Post, WorkD),
+        Surname = MS, Age > MA.
+sel1(NSur, NAge) :-
+        findall((Id, Sur, Age, Cab, Pst, WD), (bigger_age(Id, Sur, Age, Cab, Pst, WD, NSur, NAge), Id < 2000000), _).
+sel2(NSur, NAge) :-
+        findall((Id, Sur, Age, Cab, Pst, WD), (bigger_age(Id, Sur, Age, Cab, Pst, WD, NSur, NAge), Id >= 2000000, Id < 4000000), _).
+sel3(NSur, NAge) :-
+        findall((Id, Sur, Age, Cab, Pst, WD), (bigger_age(Id, Sur, Age, Cab, Pst, WD, NSur, NAge), Id >= 4000000, Id < 6000000), _).
+\end{lstlisting}
+\newpage
+\begin{lstlisting}[label=lst:exper_query_32_prolog, caption=Запрос c оператором SELECT с использованием 5 потоков (Prolog). Часть 2., basicstyle=\small, numbers = none, language=Prolog]
+sel4(NSur, NAge) :-
+        findall((Id, Sur, Age, Cab, Pst, WD), (bigger_age(Id, Sur, Age, Cab, Pst, WD, NSur, NAge), Id >= 6000000, Id < 8000000), _).
+sel5(NSur, NAge) :-
+        findall((Id, Sur, Age, Cab, Pst, WD), (bigger_age(Id, Sur, Age, Cab, Pst, WD, NSur, NAge), Id >= 8000000), _).
+testTime(NSur, NAge) :-
+        statistics(cputime, OldCpu),
+        get_time(OldWall),
+        thread_create(sel1(NSur, NAge), Sel1Thread),
+        thread_create(sel2(NSur, NAge), Sel2Thread),
+        thread_create(sel3(NSur, NAge), Sel3Thread),
+        thread_create(sel4(NSur, NAge), Sel4Thread),
+        thread_create(sel5(NSur, NAge), Sel5Thread),
+        thread_join(Sel1Thread),
+        thread_join(Sel2Thread),
+        thread_join(Sel3Thread),
+        thread_join(Sel4Thread),
+        thread_join(Sel5Thread),
+        get_time(NewWall),
+        statistics(cputime, NewCpu),
+        UsedWall is NewWall - OldWall,
+        UsedCpu  is NewCpu  - OldCpu,
+        assertz( db_bench(BenchMark, stat{  cpu_time: UsedCpu,
+                               wall_time: UsedWall })),
+        print_message(information, bench(UsedCpu, UsedWall)).
+\end{lstlisting}
+
+\section{Очистка системного кэша}
+\vspace{-0.5cm}
+На листинге \ref{lst:clean_cache} приведен скрипт выполнения очистки системного кэша, что не позволяет обратиться к имеющемуся результату выполнения запроса. 
+\newpage
+\begin{lstlisting}[label=lst:clean_cache, caption=Очистка кэша, basicstyle=\small, numbers = none]
+service postgresql stop;
+sync;
+echo 3 > /proc/sys/vm/drop_caches;
+service postgresql start
+\end{lstlisting}
+
+\section*{Вывод}
+\vspace{-0.5cm}
+В данном разделе было изложено сопоставление запросов в реляционной алгебре и их эквивалентное описание в логике предикатов. Также был обоснован выбор СУБД PostgreSQL, БД <<AdventureWorks>>, реализации SWI-Prolog, поддерживающей многопоточность. Приводится выбор средств разработки, а также деталей реализации.

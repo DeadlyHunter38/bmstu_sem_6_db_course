@@ -1,0 +1,307 @@
+\chapter{Экспериментальный раздел}
+\section{Технические характеристики}
+\vspace{-0.5cm}
+Технические характеристики устройства, на котором проводились эксперименты:
+\begin{itemize}
+    \item[$\circ$] операционная система: Ubuntu 22.04 \cite{ubuntu};
+    \item[$\circ$] память: 8Гб;
+    \item[$\circ$] размер swap-файла: 2Гб;
+    \item[$\circ$] процессор: Intel(R) Core(TM) i5-8265U CPU @ 1.60ГГц 1.80ГГц.
+\end{itemize}
+
+Во время проведения тестирования устройство было подключено к блоку питания и не нагружено никакими приложениями, кроме встроенных приложений окружения и самим окружением. Режим электропитания был включен на <<Производительный>>.
+
+\section{SELECT-запрос}
+\vspace{-0.5cm}
+Целью эксперимента является определение зависимости выполнения запроса от числа столбцов для постоянного числа записей таблицы в базе данных (аналогично для количества правил базы знаний). 
+
+В таблице \ref{table:exper_1} приведены экспериментально полученные значения временных характеристик выполнения SELECT-запросов.
+
+\begin{table}[ht!]
+	\centering
+	\captionsetup{singlelinecheck = false, justification=raggedright}
+	\caption{Таблица времени выполнения простого SELECT-запроса (в секундах)}
+	\label{table:exper_1}
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		\multirow{3}{*}{Число} & \multirow{3}{*}{Число} & \multicolumn{4}{c|}{Програмное обеспечение} \\ \cline{3-6}
+		& & SWI & YAP & PostgreSQL & PostgreSQL \\ 
+		столбцов & записей & Prolog & Prolog & (без кэша) & (с кэшем) \\ \hline
+		4 & \multirow{10}{*}{$10^7$} & 0.659228 & 0.549383 & 1.339074 & 0.807485 	 \\ \cline{1-1} \cline{3-6}
+		5 &  & 0.711844 &	0.679519 & 1.227935 & 0.818097  \\ \cline{1-1} \cline{3-6}
+		6 &  & 0.770522 &	0.771545 & 1.193835 & 0.825795  \\ \cline{1-1} \cline{3-6}
+		7 &  & 0.823258 &	0.841355 & 1.750495 & 0.832614 \\ \cline{1-1} \cline{3-6}
+		8 &  & 0.886037 &	0.94406 & 1.366828 & 0.836362  \\ \cline{1-1} \cline{3-6}
+		9 &  & 0.938527 & 1.066499 & 2.109747 & 0.851722 \\ \cline{1-1} \cline{3-6}
+		10 &  & 0.974033 & 1.136439 & 2.058274 & 0.850416  \\ \cline{1-1} \cline{3-6}
+		11 &  & 1.04980  & 1.248144 & 2.307539 & 0.852188  \\ \cline{1-1} \cline{3-6}
+		12 &  & 1.37296  & 1.411219 & 1.607229 & 0.884879  \\ \cline{1-1} \cline{3-6}
+		13 &  & 1.64924  &	1.659166 & 1.873321 & 0.884116 \\ \hline
+	\end{tabular}
+\end{table} 
+
+На рисунке \ref{image:diagram_1} приведена зависимость выполнения простого SELECT-запроса от числа столбцов для постоянного числа записей.
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\begin{tikzpicture}
+		\begin{axis}
+			[grid = major,
+			xlabel = Число столбцов,
+			ylabel = {Время, c},
+			ymin = 0,
+			xmin = 0,
+			width = 0.95\textwidth,
+			height=0.3\textheight,
+			legend style={at={(0.5,-0.2)},anchor=north},
+			xmajorgrids=true]
+			\addplot table{data/query_time_1_swi.txt};
+			\addplot table{data/query_time_1_yap.txt};
+			\addplot table{data/query_time_1_psql_no_cache.txt};
+			\addplot table{data/query_time_1_psql_cache.txt};
+			\legend{
+				SWI-prolog \\
+				YAP-prolog \\
+				PostgreSQL (без кэша) \\
+				PostgreSQL (с кэшем) \\
+			};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость выполнения простого SELECT-запроса от числа столбцов для постоянного числа записей} 
+	\label{image:diagram_1}
+\end{figure} 
+
+\section{JOIN-запрос}
+\vspace{-0.5cm}
+Целью эксперимента является определение зависимости выполнения запроса с обращением к другой таблице от числа столбцов для постоянного числа записей (аналогично для количества правил базы знаний). 
+
+В таблице \ref{table:exper_2} приведены экспериментально полученные значения временных характеристик выполнения запросов.
+
+\begin{table}[ht!]
+	\centering
+	\captionsetup{singlelinecheck = false, justification=raggedright}
+	\caption{Таблица времени выполнения JOIN-запроса (в секундах)}
+	\label{table:exper_2}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\multirow{3}{*}{Число} & \multirow{3}{*}{Число} & \multicolumn{3}{c|}{Програмное обеспечение} \\ \cline{3-5}
+		& & SWI & YAP & PostgreSQL\\
+		столбцов & записей & Prolog & Prolog & (без потоков) \\ \hline
+		4 & \multirow{10}{*}{$10^5$} & 375.436966 & 253.256186 & 0.031547 \\ \cline{1-1} \cline{3-5}
+		5 &  & 387.485804 & 367.456964 & 0.033847 \\ \cline{1-1} \cline{3-5}
+		6 &  & 438.366495 & 427.122528 & 0.038549 \\ \cline{1-1} \cline{3-5}
+		7 &  & 468.279248 & 478.549645 & 0.043654 \\ \cline{1-1} \cline{3-5}
+		8 &  & 504.606969  & 520.154154	& 0.048515 \\ \cline{1-1} \cline{3-5}
+		9 &  & 534.500522 & 561.591546	& 0.052371 \\ \cline{1-1} \cline{3-5}
+		10 &  & 554.721574 & 578.218155	& 0.055763 \\ \cline{1-1} \cline{3-5}
+		11 &  & 597.871645	& 603.125187 & 0.059163 \\ \cline{1-1} \cline{3-5}
+		12 &  & 780.914253 & 824.519815	& 0.063312 \\ \cline{1-1} \cline{3-5}
+		13 &  & 939.258741 & 1031.98327	& 0.069855 \\ \hline
+	\end{tabular}
+\end{table} 
+
+На рисунке \ref{image:diagram_2} приведена зависимость выполнения JOIN-запроса от числа столбцов для постоянного числа записей.
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\begin{tikzpicture}
+		\begin{axis}
+			[grid = major,
+			xlabel = Число столбцов,
+			ylabel = {Время, c},
+			ymin = -200,
+			xmin = 0,
+			width = 0.95\textwidth,
+			height=0.3\textheight,
+			legend style={at={(0.5,-0.2)},anchor=north},
+			xmajorgrids=true]
+			\addplot table{data/query_time_2_swi.txt};
+			\addplot table{data/query_time_2_yap.txt};
+			\addplot table{data/query_time_2_ps.txt};
+			\legend{
+				SWI-prolog \\
+				YAP-prolog \\
+				PostgreSQL (без потоков) \\
+			};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость выполнения JOIN-запроса от числа столбцов для постоянного числа записей} 
+	\label{image:diagram_2}
+\end{figure} 
+
+\section{SELECT-запрос с потоками}
+\vspace{-0.5cm}
+Целью эксперимента является определение зависимости выполнения запроса от числа столбцов таблицы базы данных с постоянным числом записей (аналогично для количества правил базы знаний) с использованием распараллеливания. 
+
+В таблице \ref{table:exper_3} приведены экспериментально полученные значения временных характеристик выполнения запросов. В SWI-Prolog использовалось число потоков, равное логическому числу ядер машины, на которой проводился эксперимент (8). Для версии PostgreSQL был установлен параметр максимального числа потоков, равным 16. Планировщиком был выбрано количество workers в виде 5 штук, что было выведено в плане запроса при помощи EXPLAIN ANALYZE \cite{explain_analyze}. 
+
+\begin{table}[ht!]
+	\centering
+	\captionsetup{singlelinecheck = false, justification=raggedright}
+	\caption{Таблица времени выполнения простого SELECT-запроса с использованием потоков (в секундах)}
+	\label{table:exper_3}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\multirow{3}{*}{Число} & \multirow{3}{*}{Число} & \multicolumn{3}{c|}{Програмное обеспечение} \\ \cline{3-5}
+		& & SWI & PostgreSQL & PostgreSQL \\
+		столбцов & записей & Prolog & (без кэша) & (с кэшем)\\ \hline
+		4 & \multirow{10}{*}{$10^7$} & 1.353939 & 0.989799 & 0.505146  \\ \cline{1-1} \cline{3-5}
+		5 &   &	1.481703 & 0.730035 & 0.509551  \\ \cline{1-1} \cline{3-5}
+		6 &   &	1.594352 & 0.768276 & 0.505604 \\ \cline{1-1} \cline{3-5}
+		7 &   &	1.738103 & 1.042243 & 0.515283 \\ \cline{1-1} \cline{3-5}
+		8 &   &	1.850044 & 0.833488 & 0.514180 \\ \cline{1-1} \cline{3-5}
+		9 &   & 1.990824 & 0.981088 & 0.520004 \\ \cline{1-1} \cline{3-5}
+		10 &  & 2.173378 & 1.190157 & 0.518509 \\ \cline{1-1} \cline{3-5}
+		11 &  & 2.249650 & 1.250775 & 0.522520 \\ \cline{1-1} \cline{3-5}
+		12 &  & 2.397863 & 1.251425 & 0.537440 \\ \cline{1-1} \cline{3-5}
+		13 &  &	2.560862 & 1.065807 & 0.539438 \\ \hline
+	\end{tabular}
+\end{table} 
+
+На рисунке \ref{image:diagram_3} приведена зависимость выполнения простого SELECT-запроса с использованием потоков.
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\begin{tikzpicture}
+		\begin{axis}
+			[grid = major,
+			xlabel = Число столбцов,
+			ylabel = {Время, c},
+			xmin = 0,
+			ymin = -0.5,
+			width = 0.95\textwidth,
+			height=0.3\textheight,
+			legend style={at={(0.5,-0.2)},anchor=north},
+			xmajorgrids=true]
+			\addplot table{data/query_time_3_swi.txt};
+			\addplot table{data/query_time_3_psql_no_cache.txt};
+			\addplot table{data/query_time_3_psql_cache.txt};
+			\legend{
+				SWI-prolog \\
+				PostgreSQL (без кэша)\\
+				PostgreSQL (с кэшем) \\
+			};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость времени выполнения простого SELECT-запроса с использованием потоков} 
+	\label{image:diagram_3}
+\end{figure} 
+
+\section{Потоки SWI-Prolog}
+\vspace{-0.5cm}
+Целью эксперимента является определение зависимости выполнения запроса от числа потоков в реализации SWI-Prolog для постоянного числа записей. Результаты выполнения измерений представлены в таблице \ref{table:exper_4}. \vspace{0.5cm}
+
+\begin{longtable}{|c|c|c|c|}
+	\caption[Таблица времени выполнения простого SELECT-запроса с использованием потоков (в секундах)]{Таблица времени выполнения простого SELECT-запроса с использованием потоков (в секундах)} \label{table:exper_4} \\
+
+	\hline
+	Число & Число & Число & SWI   \\ 
+	столбцов & записей & потоков & Prolog \\ \hline
+	\endfirsthead
+	
+	\multicolumn{4}{l}
+	{{\tablename\ \thetable{} -- продолжение}} \\
+	\hline
+	Число & Число & Число & SWI   \\ 
+	столбцов & записей & потоков & Prolog \\ \hline
+	\endhead
+	
+	\hline \multicolumn{4}{|r|}{{Продолжение на следующей странице}} \\ \hline
+    \endfoot
+    
+    \hline \multicolumn{4}{|r|}{{Конец таблицы}} \\ \hline
+    \endlastfoot
+
+	\multirow{7}{*}{4} & \multirow{7}{*}{$10^7$} & 2 &  0.592607 \\ \cline{3-4}
+	& & 3    &	0.673686  \\ \cline{3-4}
+	& & 4   &	0.736398  \\ \cline{3-4}
+	& & 5    &	1.012103 \\ \cline{3-4}
+	& & 6     &	1.099502  \\ \cline{3-4}
+	& & 7    & 1.230243  \\ \cline{3-4}
+	& & 8   & 1.353939  \\ \cline{3-4}
+    \hline
+	\multirow{7}{*}{5} & \multirow{7}{*}{$10^7$} & 2 &  0.645411 \\ \cline{3-4}
+	& & 3    &	0.733633  \\ \cline{3-4}
+	& & 4   &	0.803135  \\ \cline{3-4}
+	& & 5    &	1.092881 \\ \cline{3-4}
+	& & 6     &	1.185542  \\ \cline{3-4}
+	& & 7    & 1.393922  \\ \cline{3-4}
+	& & 8   & 1.481703  \\ \cline{3-4}
+	\hline
+	\multirow{7}{*}{9} & \multirow{7}{*}{$10^7$} & 2 &  0.887928 \\ \cline{3-4}
+	& & 3    &	0.969058  \\ \cline{3-4}
+	& & 4   &	1.090071  \\ \cline{3-4}
+	& & 5    &	1.476527 \\ \cline{3-4}
+	& & 6     &	1.573091 \\ \cline{3-4}
+	& & 7    & 1.802725  \\ \cline{3-4}
+	& & 8   & 1.990824  \\ \cline{3-4}
+	\hline
+	\multirow{7}{*}{13} & \multirow{7}{*}{$10^7$} & 2 &  1.375427 \\ \cline{3-4}
+	& & 3    &	1.224211  \\ \cline{3-4}
+	& & 4   &	1.524814  \\ \cline{3-4}
+	& & 5    &	1.863615 \\ \cline{3-4}
+	& & 6     &	2.01534 \\ \cline{3-4}
+	& & 7    & 2.275334  \\ \cline{3-4}
+	& & 8   & 2.560862  \\ \cline{3-4}
+	\hline
+\end{longtable}
+
+В таблице \ref{table:exper_5} приведены совмещенные результаты, полученные в таблицах \ref{table:exper_3} и \ref{table:exper_4}.
+\clearpage
+\begin{table}[ht!]
+	\centering
+	\captionsetup{singlelinecheck = false, justification=raggedright}
+	\caption{Объединение результатов простого SELECT-запроса с использованием потоков (в секундах)}
+	\label{table:exper_5}
+	\begin{tabular}{|c|c|c|c|c|c|c|}
+		\hline
+		Число & Число   & SWI         & SWI        & SWI        & SWI        & Postgre  \\ 
+	столбцов  & записей & Prolog(2)  & Prolog(3) & Prolog(4) & Prolog(5) & SQL(5)\\ \hline
+		4 & \multirow{4}{*}{$10^7$} & 0.592607 & 0.673686 & 0.736398 & 1.012103 & 0.989799\\ 
+		5 &                         & 0.645411 & 0.733633 & 0.803135 & 1.092881 & 0.730035\\ 
+		9 &   &	0.887928 & 0.969058 & 1.090071 & 1.476527 & 0.981088\\ 
+		13 &   & 1.375427 & 1.224211 & 1.524814 & 1.863615 & 1.065807\\ 
+        \hline
+	\end{tabular}
+\end{table} 
+
+На рисунке \ref{image:diagram_5} приведена зависимость выполнения простого SELECT-запроса с использованием потоков.
+\begin{figure}[H]
+	\centering
+	\captionsetup{justification=centering}
+	\begin{tikzpicture}
+		\begin{axis}
+			[grid = major,
+			xlabel = Число столбцов,
+			ylabel = {Время, c},
+			xmin = 0,
+			ymin = 0,
+			width = 0.95\textwidth,
+			height=0.3\textheight,
+			legend style={at={(0.5,-0.2)},anchor=north},
+			xmajorgrids=true]
+			\addplot [blue, mark=square*] table{data/query_time_2_threads_swi.txt};
+			\addplot [gray, mark=square*] table{data/query_time_3_threads_swi.txt};
+			\addplot [brown, mark=square*] table{data/query_time_4_threads_swi.txt};
+			\addplot [black, mark=square*] table{data/query_time_5_threads_swi.txt};
+			\addplot [red, mark=square*] table{data/query_time_5_threads_psql.txt};
+			\legend{
+				SWI-prolog (2 потока)\\
+				SWI-prolog (3 потока)\\
+				SWI-prolog (4 потока)\\
+				SWI-prolog (5 потоков)\\
+				PostgreSQL (5 потоков, без кэша) \\
+			};
+		\end{axis}
+	\end{tikzpicture}
+	\caption{Зависимость времени выполнения простого SELECT-запроса с использованием потоков} 
+	\label{image:diagram_5}
+\end{figure} 
+
+\section*{Вывод}
+\vspace{-0.5cm}
+Логический язык программирования рекомендуется как инструмент выполнения простых SELECT-запросов в таблице. Использование такого подхода будет полезным, если не требуется кэширование при вычислениях. Отличительные показатели Prolog-реализаций демонстрируются для малого числа термов (4-7). Однако, при обработке больше 8 столбцов требуется больше времени для получения результата, чем исполнителю PostgreSQL с сохранением в кэш-памяти. Стоит отметить, что YAP-Prolog начинает проседать по производительности по сравнению с SWI по мере увеличения количества атрибутов.
+
+Обращение к данным из другой таблицы требует больше проверок, чем выполнение простого запроса. Таким образом, Prolog-версии программного обеспечения выдают временные показатели в 10000 раз выше, чем PostgreSQL.
+
+Распараллеливание запросов механизмами логического языка программирования показало, что использование параллелизма в этой парадигме отличается от императивного стиля. Не следует работать с больше, чем двумя-тремя потоками, что приводит к увеличению нагрузки выполнения запроса.
