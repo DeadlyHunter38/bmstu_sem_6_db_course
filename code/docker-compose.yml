@@ -1,20 +1,26 @@
 version: '3.9'
 services:
   postgres:
-    container_name: postgres_container
+    container_name: postgres
     image: postgres:14.2
     restart: unless-stopped
     ports:
       - '5432:5432'
-    volumes:
-      - db_project:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - ./chinook:/chinook
-      - ./northwind:/northwind
-      - ./adventure_works:/adventure_works
-volumes:
-  db_project:
-
+      - ./chinook:/db_project/chinook
+      - ./northwind:/db_project/northwind
+      - ./adventure_works:/db_project/adventure_works
+  swipl_odbc:
+     container_name: swipl_odbc
+     build: 
+       context: ./swipl_odbc
+     volumes:
+      - ./chinook:/db_project/chinook
+      - ./northwind:/db_project/northwind
+      - ./adventure_works:/db_project/adventure_works
+     tty: true
+     ports:
+       - '8080:80'
